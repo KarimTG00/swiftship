@@ -1,7 +1,18 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import ImgEntrepot from "../assets/entrepot.jpg";
 
 export default function Section1() {
+  const [numero, setNumero] = useState("");
+  const navigate = useNavigate();
+
+  function auEnvoi(e) {
+    e.preventDefault();
+    const propre = numero.trim();
+    if (propre) navigate(`/tracking/${encodeURIComponent(propre)}`);
+  }
+
   return (
     <div id="suivi" className="border-black">
       <div className="relative">
@@ -23,21 +34,26 @@ export default function Section1() {
               Suivez votre colis à chaque étape, sans compte et sans
               inscription.
             </p>
-            <div className="relative bg-gray-300/40 w-full max-w-md flex items-center rounded-lg h-12 mt-8 md:mt-10 animate-slide-up">
+            <form
+              onSubmit={auEnvoi}
+              className="relative bg-gray-300/40 w-full max-w-md flex items-center rounded-lg h-12 mt-8 md:mt-10 animate-slide-up"
+            >
               <input
                 type="text"
                 aria-label="Numéro de suivi"
+                value={numero}
+                onChange={(e) => setNumero(e.target.value)}
                 className="border-white w-full h-full text-white placeholder:text-white/80 px-3 pr-12"
                 placeholder="Entrez votre numéro de suivi"
               />
               <button
-                type="button"
+                type="submit"
                 aria-label="Suivre mon colis"
                 className="absolute right-1 bg-white rounded-xl p-1"
               >
                 <ArrowUpRight />
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
