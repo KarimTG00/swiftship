@@ -1,6 +1,8 @@
-import { Box } from "lucide-react";
+import { Box, LogIn, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import ContactModal from "./contactModal";
+import { useAuth } from "../contexts/contexteAuth";
 
 // TODO: renseigner les coordonnées réelles de l'agence.
 // Une valeur laissée vide n'est pas affichée : ne jamais inventer de numéro,
@@ -65,6 +67,7 @@ function Lien({ label, href, onClick }) {
 
 export default function Footer() {
   const [contactOuvert, setContactOuvert] = useState(false);
+  const { utilisateur } = useAuth();
   const coordonnees = contact.filter((c) => c.valeur);
 
   return (
@@ -158,8 +161,30 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-gray-800 px-8 py-6 text-center text-gray-500">
-        © {new Date().getFullYear()} SwiftShipe. Tous droits réservés.
+      <div className="border-t border-gray-800 px-6 md:px-8 py-6">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-500">
+          <span>© {new Date().getFullYear()} SwiftShipe. Tous droits réservés.</span>
+
+          {/* Accès réservé aux membres de l'agence : discret, en pied de page,
+              jamais mis en avant sur la partie vitrine (§13). */}
+          {utilisateur ? (
+            <Link
+              to="/dashboard"
+              className="flex items-center gap-2 border border-gray-700 rounded-full px-4 py-2 text-gray-300 hover:text-white hover:border-gray-500"
+            >
+              <LayoutDashboard className="size-4" />
+              Tableau de bord
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 border border-gray-700 rounded-full px-4 py-2 text-gray-300 hover:text-white hover:border-gray-500"
+            >
+              <LogIn className="size-4" />
+              Se connecter
+            </Link>
+          )}
+        </div>
       </div>
 
       {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}

@@ -2,6 +2,7 @@ import { Box, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ContactModal from "../components/contactModal";
+import { useAuth } from "../contexts/contexteAuth";
 
 // TODO: ajouter /faq ici une fois la page créée.
 const liens = [
@@ -13,6 +14,7 @@ const liens = [
 
 export default function Menu() {
   const [contactOuvert, setContactOuvert] = useState(false);
+  const { utilisateur } = useAuth();
 
   return (
     <div
@@ -49,8 +51,15 @@ export default function Menu() {
           Contactez-nous
         </button>
         <Link
-          to="/#suivi"
+          to={utilisateur ? "/dashboard" : "/login"}
           style={{ animationDelay: `${0.15 + (liens.length + 1) * 0.09}s` }}
+          className="animate-rise-in text-xl font-semibold py-5 border-b border-gray-200"
+        >
+          {utilisateur ? "Tableau de bord" : "Se connecter"}
+        </Link>
+        <Link
+          to="/#suivi"
+          style={{ animationDelay: `${0.15 + (liens.length + 2) * 0.09}s` }}
           className="animate-rise-in mt-10 bg-orange-500 text-white text-xl font-semibold text-center rounded-full px-6 py-4"
         >
           Suivre mon colis
