@@ -29,11 +29,15 @@ export default function Login() {
 
     try {
       await connexion(email, motDePasse);
-      navigate(destination, { replace: true });
+      // Pas de navigate ici : l'effet ci-dessus s'en charge dès que
+      // "utilisateur" est renseigné. Naviguer aux deux endroits déclenchait
+      // deux redirections dans le même cycle de rendu.
+      // On ne remet pas non plus "envoi" à false : le composant est démonté
+      // par la redirection, et modifier son état après coup fait manipuler à
+      // React des nœuds qui ne sont plus dans le document.
     } catch (e) {
       setErreur(e.message);
       setMotDePasse("");
-    } finally {
       setEnvoi(false);
     }
   }

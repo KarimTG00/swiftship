@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import Menu from "./pages/menu";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
+import Expeditions from "./pages/expeditions";
 
 const provider = createBrowserRouter([
   {
@@ -25,6 +26,14 @@ const provider = createBrowserRouter([
     element: (
       <RouteProtegee>
         <Dashboard />
+      </RouteProtegee>
+    ),
+  },
+  {
+    path: "/dashboard/expeditions",
+    element: (
+      <RouteProtegee>
+        <Expeditions />
       </RouteProtegee>
     ),
   },

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, LogOut } from "lucide-react";
+import { Box, LogOut, PackagePlus, List } from "lucide-react";
 import { useAuth } from "../contexts/contexteAuth";
+import ModaleExpedition from "../components/ModaleExpedition";
 
 // Les trois zones du dashboard arrivent aux étapes suivantes :
 //   zone 1 — créer une expédition
@@ -20,14 +21,16 @@ function ZoneAVenir({ titre, description }) {
 export default function Dashboard() {
   const { utilisateur, deconnexion } = useAuth();
   const [sortie, setSortie] = useState(false);
+  const [modaleOuverte, setModaleOuverte] = useState(false);
 
   async function auClicDeconnexion() {
     setSortie(true);
     try {
       await deconnexion();
       // Pas de navigate : RouteProtegee renvoie automatiquement vers /login
-      // dès que l'utilisateur passe à null.
-    } finally {
+      // dès que l'utilisateur passe à null. On ne remet pas "sortie" à false
+      // non plus, le composant étant démonté par cette redirection.
+    } catch {
       setSortie(false);
     }
   }
@@ -66,21 +69,34 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ZoneAVenir
-            titre="Nouvelle expédition"
-            description="Enregistrer un colis et obtenir son numéro de suivi."
-          />
-          <ZoneAVenir
-            titre="Messages"
-            description="Discuter en direct avec les clients qui suivent leur colis."
-          />
-          <ZoneAVenir
-            titre="Expéditions"
-            description="Consulter les expéditions en cours et terminées, mettre une livraison en pause ou la relancer."
-          />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            type="button"
+            onClick={() => setModaleOuverte(true)}
+            className="flex items-center justify-center gap-2 bg-orange-500 text-white font-semibold rounded-full px-6 py-3"
+          >
+            <PackagePlus className="size-5" />
+            Créer une nouvelle expédition
+          </button>
+
+          <Link
+            to="/dashboard/expeditions"
+            className="flex items-center justify-center gap-2 bg-white border border-gray-300 font-semibold rounded-full px-6 py-3"
+          >
+            <List className="size-5" />
+            Voir les expéditions
+          </Link>
         </div>
+
+        <ZoneAVenir
+          titre="Messages"
+          description="Discuter en direct avec les clients qui suivent leur colis."
+        />
       </main>
+
+      {modaleOuverte && (
+        <ModaleExpedition onClose={() => setModaleOuverte(false)} />
+      )}
     </div>
   );
 }

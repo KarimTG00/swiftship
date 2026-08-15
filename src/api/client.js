@@ -4,10 +4,13 @@
 const BASE = import.meta.env.VITE_API_URL ?? "";
 
 export class ErreurApi extends Error {
-  constructor(message, statut) {
+  constructor(message, statut, champs) {
     super(message);
     this.name = "ErreurApi";
     this.statut = statut;
+    // Détail des erreurs de validation, champ par champ, renvoyé par l'API
+    // sur un 400. Permet d'afficher chaque message sous le bon input.
+    this.champs = champs ?? null;
   }
 }
 
@@ -41,6 +44,7 @@ export async function appelApi(chemin, { methode = "GET", corps } = {}) {
     throw new ErreurApi(
       donnees?.erreur ?? "Une erreur inattendue est survenue.",
       reponse.status,
+      donnees?.champs,
     );
   }
 
