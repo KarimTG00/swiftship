@@ -1,4 +1,5 @@
 import { Box, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 import camion from "../assets/camion.jpg";
 
 export default function Section2() {
@@ -30,14 +31,14 @@ export default function Section2() {
           directement depuis le site.
         </p>
       </div>
-      <a href="#a-propos" className="flex items-center gap-6 w-fit group">
+      <Link to="/about" className="flex items-center gap-6 w-fit group">
         <span className="bg-orange-500/90 w-fit rounded-full text-gray-100">
           <Plus className="size-12" />
         </span>
         <span className="text-2xl font-bold group-hover:underline">
           En savoir plus
         </span>
-      </a>
+      </Link>
     </div>
   );
 }

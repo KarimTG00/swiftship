@@ -19,11 +19,11 @@ const contact = [
 // créées. Pour l'instant, seules les ancres de la page d'accueil existent :
 // pas de lien mort.
 const navigation = [
-  { label: "Accueil", href: "#suivi" },
-  { label: "Services", href: "#services" },
-  { label: "Zones desservies", href: "#zones" },
-  { label: "À propos", href: "#a-propos" },
-  { label: "Suivi de colis", href: "#suivi" },
+  { label: "Accueil", href: "/" },
+  { label: "Services", href: "/#services" },
+  { label: "Zones desservies", href: "/#zones" },
+  { label: "À propos", href: "/about" },
+  { label: "Suivi de colis", href: "/tracking" },
   { label: "FAQ", href: null },
   { label: "Contact", action: "contact" },
 ];
@@ -58,10 +58,12 @@ function Lien({ label, href, onClick }) {
   if (!href) {
     return <span className="text-gray-500">{label}</span>;
   }
+  // Link plutôt que <a> : le footer est présent sur toutes les pages, et une
+  // ancre brute ne mènerait nulle part ailleurs que sur l'accueil.
   return (
-    <a href={href} className="text-gray-300 hover:text-white">
+    <Link to={href} className="text-gray-300 hover:text-white">
       {label}
-    </a>
+    </Link>
   );
 }
 
@@ -81,12 +83,12 @@ export default function Footer() {
           <p className="text-gray-400">
             Suivez votre colis à chaque étape, sans compte et sans inscription.
           </p>
-          <a
-            href="#suivi"
+          <Link
+            to="/tracking"
             className="inline-block bg-orange-500 text-white rounded-full px-4 py-2 font-semibold"
           >
             Suivre mon colis
-          </a>
+          </Link>
         </div>
 
         <div className="space-y-3">
@@ -112,9 +114,9 @@ export default function Footer() {
           <ul className="space-y-2">
             {services.map((service) => (
               <li key={service}>
-                <a href="#services" className="text-gray-300 hover:text-white">
+                <Link to="/#services" className="text-gray-300 hover:text-white">
                   {service}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

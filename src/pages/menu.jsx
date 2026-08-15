@@ -9,7 +9,8 @@ const liens = [
   { label: "Accueil", to: "/" },
   { label: "Services", to: "/#services" },
   { label: "Zones desservies", to: "/#zones" },
-  { label: "À propos", to: "/#a-propos" },
+  { label: "À propos", to: "/about" },
+  { label: "Suivre un colis", to: "/tracking" },
 ];
 
 export default function Menu() {
