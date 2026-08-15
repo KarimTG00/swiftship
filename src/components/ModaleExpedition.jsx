@@ -12,6 +12,7 @@ const TYPES = [
 const VIDE = {
   nom: "",
   telephone: "",
+  email: "",
   adresse: "",
   ville: "",
   destination: "",
@@ -88,6 +89,7 @@ export default function ModaleExpedition({ onClose, onCreee }) {
         destinataire: {
           nom: valeurs.nom,
           telephone: valeurs.telephone,
+          email: valeurs.email,
           adresse: valeurs.adresse,
           ville: valeurs.ville,
         },
@@ -223,6 +225,16 @@ export default function ModaleExpedition({ onClose, onCreee }) {
                 </Champ>
               </div>
 
+              <Champ id="email" label="Email">
+                <input
+                  id="email"
+                  type="email"
+                  value={valeurs.email}
+                  onChange={(e) => maj("email", e.target.value)}
+                  className={classeChamp}
+                />
+              </Champ>
+
               <Champ id="adresse" label="Adresse précise">
                 <input
                   id="adresse"
@@ -230,11 +242,12 @@ export default function ModaleExpedition({ onClose, onCreee }) {
                   onChange={(e) => maj("adresse", e.target.value)}
                   className={classeChamp}
                 />
-                <p className="text-gray-500 text-sm">
-                  Reste interne. Seule la destination ci-dessous est visible sur
-                  la page de suivi publique.
-                </p>
               </Champ>
+
+              <p className="text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm">
+                Ces coordonnées sont affichées sur la page de suivi, qui est
+                publique : toute personne disposant du numéro de suivi les voit.
+              </p>
             </fieldset>
 
             <fieldset className="space-y-4">

@@ -23,6 +23,30 @@ function dateLongue(valeur) {
   });
 }
 
+// Une fiche n'est affichée que si elle contient au moins une information :
+// mieux vaut la masquer qu'afficher un bloc vide.
+function Fiche({ titre, lignes }) {
+  const remplies = lignes.filter(([, valeur]) => valeur);
+  if (remplies.length === 0) return null;
+
+  return (
+    <section className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 h-fit">
+      <h2 className="text-xl font-bold mb-4">{titre}</h2>
+      <dl className="space-y-2">
+        {remplies.map(([cle, valeur]) => (
+          <div
+            key={cle}
+            className="flex justify-between gap-4 border-b border-gray-100 py-1"
+          >
+            <dt className="text-gray-500 shrink-0">{cle}</dt>
+            <dd className="text-right font-medium break-words">{valeur}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
 function Recherche({ valeurInitiale = "" }) {
   const [numero, setNumero] = useState(valeurInitiale);
   const navigate = useNavigate();
@@ -155,32 +179,43 @@ export default function Tracking() {
                 <Timeline colis={colis} />
               </section>
 
-              <section className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 h-fit">
-                <h2 className="text-xl font-bold mb-4">Informations</h2>
-                <dl className="space-y-2">
-                  {[
+              <div className="space-y-6">
+                <Fiche
+                  titre="Colis"
+                  lignes={[
                     ["Type", LIBELLES_TYPE[colis.typeLivraison]],
-                    ["Départ", colis.origine],
-                    ["Destination", colis.destination],
+                    ["Description", colis.colis?.description],
                     ["Taille", colis.colis?.taille],
                     [
                       "Poids",
                       colis.colis?.poids ? `${colis.colis.poids} kg` : null,
                     ],
+                    ["Distance", colis.distanceKm ? `${colis.distanceKm} km` : null],
                     ["Enregistré le", dateLongue(colis.creeLe)],
-                  ]
-                    .filter(([, v]) => v)
-                    .map(([cle, valeur]) => (
-                      <div
-                        key={cle}
-                        className="flex justify-between gap-4 border-b border-gray-100 py-1"
-                      >
-                        <dt className="text-gray-500">{cle}</dt>
-                        <dd className="text-right font-medium">{valeur}</dd>
-                      </div>
-                    ))}
-                </dl>
-              </section>
+                  ]}
+                />
+
+                <Fiche
+                  titre="Destinataire"
+                  lignes={[
+                    ["Nom", colis.destinataire?.nom],
+                    ["Téléphone", colis.destinataire?.telephone],
+                    ["Email", colis.destinataire?.email],
+                    ["Adresse", colis.destinataire?.adresse],
+                    ["Ville", colis.destinataire?.ville],
+                  ]}
+                />
+
+                <Fiche
+                  titre="Votre interlocuteur"
+                  lignes={[
+                    ["Nom", colis.agence?.nom],
+                    ["Téléphone", colis.agence?.telephone],
+                    ["Email", colis.agence?.email],
+                    ["Agence", colis.agence?.adresse],
+                  ]}
+                />
+              </div>
             </div>
           </div>
         )}
