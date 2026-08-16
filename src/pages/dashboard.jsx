@@ -3,20 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, LogOut, PackagePlus, List } from "lucide-react";
 import { useAuth } from "../contexts/contexteAuth";
 import ModaleExpedition from "../components/ModaleExpedition";
-
-// Les trois zones du dashboard arrivent aux étapes suivantes :
-//   zone 1 — créer une expédition
-//   zone 2 — conversations et chat avec les clients
-//   zone 3 — voir les expéditions, avec pause / relance de la livraison
-function ZoneAVenir({ titre, description }) {
-  return (
-    <section className="bg-white rounded-2xl p-6 border border-gray-200">
-      <h2 className="text-xl font-bold">{titre}</h2>
-      <p className="text-gray-600 mt-2">{description}</p>
-      <p className="text-gray-400 mt-4 text-sm">Pas encore disponible.</p>
-    </section>
-  );
-}
+import ZoneMessages from "../components/ZoneMessages";
 
 export default function Dashboard() {
   const { utilisateur, deconnexion } = useAuth();
@@ -88,10 +75,7 @@ export default function Dashboard() {
           </Link>
         </div>
 
-        <ZoneAVenir
-          titre="Messages"
-          description="Discuter en direct avec les clients qui suivent leur colis."
-        />
+        <ZoneMessages />
       </main>
 
       {modaleOuverte && (
