@@ -1,4 +1,5 @@
 import Footer from "../components/footer";
+import WidgetChat from "../components/WidgetChat";
 import Header from "../components/header";
 import Section1 from "../components/homeSection1";
 import Section2 from "../components/homeSection2";
@@ -38,6 +39,7 @@ export default function Home() {
       <Section6 />
       <Section7 />
       <Footer />
+      <WidgetChat />
     </div>
   );
 }

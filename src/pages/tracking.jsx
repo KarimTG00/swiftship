@@ -7,6 +7,7 @@ import Timeline from "../components/Timeline";
 import CarteItineraire from "../components/CarteItineraire";
 import { arriveeAjustee } from "../domaine/progression";
 import Footer from "../components/footer";
+import WidgetChat from "../components/WidgetChat";
 
 const LIBELLES_TYPE = {
   STANDARD: "Livraison standard",
@@ -222,6 +223,8 @@ export default function Tracking() {
       </main>
 
       <Footer />
+
+      <WidgetChat />
     </div>
   );
 }

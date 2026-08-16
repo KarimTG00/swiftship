@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import WidgetChat from "../components/WidgetChat";
 import ContactModal from "../components/contactModal";
 import banniere from "../assets/colisCamion.jpg";
 import aerien from "../assets/aerien.jpg";
@@ -363,6 +364,8 @@ export function Service() {
       </main>
 
       <Footer />
+
+      <WidgetChat />
 
       {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
     </div>
