@@ -8,7 +8,6 @@ import { useAuth } from "../contexts/contexteAuth";
 const liens = [
   { label: "Accueil", to: "/" },
   { label: "Services", to: "/service" },
-  { label: "Zones desservies", to: "/#zones" },
   { label: "À propos", to: "/about" },
   { label: "Suivre un colis", to: "/tracking" },
 ];

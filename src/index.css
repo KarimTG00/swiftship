@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Tailwind 4 a changé le comportement par défaut : les boutons héritent de
+   cursor: default au lieu de pointer. On le rétablit ici plutôt que d'ajouter
+   cursor-pointer sur chaque bouton du projet — un oubli serait invisible en
+   relecture mais bien visible à l'usage.
+   Les boutons désactivés gardent volontairement le curseur par défaut. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+}
+
 @theme {
   --animate-slide-in: slide-in 0.8s ease-out forwards;
   --animate-slide-up: slide-up 0.8s ease-in forwards;

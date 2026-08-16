@@ -1,6 +1,6 @@
 import { Box, LogIn, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ContactModal from "./contactModal";
 import { useAuth } from "../contexts/contexteAuth";
 
@@ -20,7 +20,6 @@ const contact = [
 const navigation = [
   { label: "Accueil", href: "/" },
   { label: "Services", href: "/service" },
-  { label: "Zones desservies", href: "/#zones" },
   { label: "À propos", href: "/about" },
   { label: "Suivi de colis", href: "/tracking" },
   { label: "FAQ", href: null },
@@ -57,12 +56,20 @@ function Lien({ label, href, onClick }) {
   if (!href) {
     return <span className="text-gray-500">{label}</span>;
   }
-  // Link plutôt que <a> : le footer est présent sur toutes les pages, et une
-  // ancre brute ne mènerait nulle part ailleurs que sur l'accueil.
+  // NavLink plutôt que <a> : le footer est présent sur toutes les pages. Il
+  // sait donc aussi marquer la page courante.
   return (
-    <Link to={href} className="text-gray-300 hover:text-white">
+    <NavLink
+      to={href}
+      end={href === "/"}
+      className={({ isActive }) =>
+        isActive
+          ? "text-orange-400 font-semibold"
+          : "text-gray-300 hover:text-white"
+      }
+    >
       {label}
-    </Link>
+    </NavLink>
   );
 }
 

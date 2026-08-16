@@ -13,7 +13,8 @@ import { useLocation } from "react-router-dom";
 export default function Home() {
   const { hash } = useLocation();
 
-  // Le menu mobile (/menu) renvoie vers "/#services", "/#zones"… : React Router
+  // Un lien vers une ancre de l'accueil ("/#zones") depuis une autre page :
+  // React Router
   // ne fait pas défiler vers l'ancre tout seul.
   useEffect(() => {
     if (!hash) return;
