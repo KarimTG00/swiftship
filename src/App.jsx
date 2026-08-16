@@ -9,6 +9,7 @@ import Dashboard from "./pages/dashboard";
 import Expeditions from "./pages/expeditions";
 import Tracking from "./pages/tracking";
 import About from "./pages/about";
+import { Service } from "./pages/service";
 
 const provider = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const provider = createBrowserRouter([
   {
     path: "/about",
     element: <About />,
+  },
+  {
+    path: "/service",
+    element: <Service />,
   },
   {
     path: "/tracking",

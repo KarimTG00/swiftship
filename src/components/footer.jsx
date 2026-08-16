@@ -15,12 +15,11 @@ const contact = [
   { label: "Horaires", valeur: "" },
 ];
 
-// TODO: remplacer par des routes (/services, /about, /faq) une fois les pages
-// créées. Pour l'instant, seules les ancres de la page d'accueil existent :
-// pas de lien mort.
+// TODO: ajouter /faq une fois la page créée. Les entrées sans href sont
+// rendues en texte grisé plutôt qu'en lien mort.
 const navigation = [
   { label: "Accueil", href: "/" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/service" },
   { label: "Zones desservies", href: "/#zones" },
   { label: "À propos", href: "/about" },
   { label: "Suivi de colis", href: "/tracking" },
@@ -114,7 +113,7 @@ export default function Footer() {
           <ul className="space-y-2">
             {services.map((service) => (
               <li key={service}>
-                <Link to="/#services" className="text-gray-300 hover:text-white">
+                <Link to="/service" className="text-gray-300 hover:text-white">
                   {service}
                 </Link>
               </li>

@@ -18,7 +18,7 @@ export default function Header() {
         {/* Les ancres sont préfixées par "/" : sur une autre page qu'accueil,
             un simple "#services" ne mènerait nulle part. */}
         <nav className="hidden md:flex items-center gap-4 lg:gap-6">
-          <Link to="/#services">Services</Link>
+          <Link to="/service">Services</Link>
           <Link to="/#zones">Zones desservies</Link>
           <Link to="/about">À propos</Link>
           <button type="button" onClick={() => setContactOuvert(true)}>
@@ -41,7 +41,9 @@ export default function Header() {
         </Link>
       </div>
 
-      {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
+      {contactOuvert && (
+        <ContactModal onClose={() => setContactOuvert(false)} />
+      )}
     </header>
   );
 }
