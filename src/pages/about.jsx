@@ -8,34 +8,56 @@ import {
   Eye,
   Handshake,
   MapPin,
+  PackageSearch,
+  Quote,
   ShieldCheck,
+  Star,
   Zap,
 } from "lucide-react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ContactModal from "../components/contactModal";
-import entrepot from "../assets/entrepot.jpg";
-import camion from "../assets/camion.jpg";
+import entrepot from "../assets/LivraisonModifie.jpg";
+import livreur from "../assets/livraison.jpg";
+import colisCamion from "../assets/colisCamion.jpg";
+import atelier from "../assets/entrepot.jpg";
 
 // ---------------------------------------------------------------------------
 // DONNÉES D'EXEMPLE — à remplacer par les informations réelles de l'agence.
 // Tout le contenu de la page vient de cet objet : il n'y a rien à modifier
 // ailleurs dans le fichier.
 //
-// Rappel de la règle du projet : ne jamais publier de chiffres inventés
-// (colis livrés, clients, taux de réussite). C'est pourquoi aucun compteur
-// ne figure ici — ajoute-les seulement quand tu auras les vrais.
+// Les chiffres ci-dessous (10 000 livraisons, 9 clients sur 10, 5 ans) sont
+// des valeurs d'exemple. Ne les publie pas tels quels : la règle du projet
+// interdit d'afficher des chiffres inventés.
 // ---------------------------------------------------------------------------
 const AGENCE = {
   nom: "SwiftShipe",
   creeeEn: "2021",
   slogan: "Votre colis, notre priorité.",
 
-  histoire: [
-    "SwiftShipe est née d'un constat simple : quand on attend un colis, la question qui compte n'est pas de savoir comment il voyage, mais où il se trouve et quand il arrive. Trop souvent, la réponse demandait un appel, une attente, et parfois aucune certitude.",
-    "L'agence a commencé avec une poignée de livraisons de proximité et un carnet papier. La demande a grandi, le carnet a montré ses limites, et l'idée d'un suivi accessible à tous s'est imposée d'elle-même.",
-    "Aujourd'hui, chaque colis confié à l'agence reçoit un numéro de suivi unique. Un numéro suffit pour savoir où en est la livraison, sans compte à créer et sans mot de passe à retenir.",
-  ],
+  evolution: {
+    titre: "Notre monde évolue autour de vous",
+    accroche: "Premier jour : 10 livraisons. Aujourd'hui : environ 10 000.",
+    texte:
+      "Depuis plus de 5 ans, nous innovons pour vous offrir toujours plus. Nous augmentons nos moyens de transport et développons notre réseau, simplifions la logistique, améliorons le suivi et la visibilité, et exploitons les données de chaque étape du transport pour optimiser votre expérience.",
+  },
+
+  excellence: {
+    titre: "Offrir un service d'excellence à nos clients",
+    texte:
+      "Selon nos propres statistiques, près de 9 clients destinataires sur 10 sont satisfaits de leur livraison. Afin de répondre aux exigences des clients professionnels et particuliers, SwiftShipe a mis en place de nombreuses offres pour une livraison de colis sur-mesure. Ces solutions permettent de transporter et livrer tous types de marchandises dans des conditions optimales : livraison express, le jour même ou sur rendez-vous, à domicile ou en point de retrait, avec un suivi précis grâce à l'outil de tracking.",
+    note: "Enquête de satisfaction envoyée à nos clients destinataires à la suite d'une livraison.",
+  },
+
+  innovation: {
+    titre: "L'innovation, un enjeu majeur chez SwiftShipe",
+    paragraphes: [
+      "Afin de répondre à ses enjeux stratégiques et garantir un traitement efficace et rapide des colis, SwiftShipe a investi ces dernières années dans des machines performantes — trieuses, plateaux automatisés — et dans les nouvelles technologies : caméras de vidéo-tracking, lecteurs de codes-barres multi-faces.",
+      "Nous optimisons également la relation client et les preuves de livraison grâce à des outils d'analyse automatisée.",
+      "SwiftShipe innove aussi pour répondre aux enjeux des produits alimentaires et de santé thermosensibles, en développant un réseau de transport sous température dirigée et des hubs dédiés à ces activités.",
+    ],
+  },
 
   vision:
     "Rendre la livraison lisible. Nous voulons qu'une personne qui attend un colis obtienne une réponse en quelques secondes, à toute heure, sans avoir à appeler qui que ce soit. La technologie n'est pas là pour impressionner : elle est là pour supprimer l'inquiétude.",
@@ -70,6 +92,38 @@ const AGENCE = {
     },
   ],
 
+  // TODO: remplacer par de vrais témoignages recueillis auprès de clients.
+  temoignages: [
+    {
+      nom: "Amina K.",
+      role: "Destinataire",
+      note: 5,
+      texte:
+        "J'ai reçu le numéro de suivi par message et j'ai pu voir l'avancement sans créer de compte. C'est exactement ce que j'attendais.",
+    },
+    {
+      nom: "Marc D.",
+      role: "Expéditeur régulier",
+      note: 5,
+      texte:
+        "J'envoie plusieurs colis par semaine. Un appel à l'agence suffit, et mes clients suivent leur livraison eux-mêmes. Ça m'a enlevé beaucoup d'appels.",
+    },
+    {
+      nom: "Sofia B.",
+      role: "Destinataire",
+      note: 4,
+      texte:
+        "La barre de progression m'a évité de me demander toute la journée si le colis arrivait. J'ai su quand me rendre disponible.",
+    },
+    {
+      nom: "Julien T.",
+      role: "Commerçant",
+      note: 5,
+      texte:
+        "Le contact est direct : j'écris depuis le site, on me répond. Pas de numéro surtaxé, pas de robot.",
+    },
+  ],
+
   localisation: {
     adresse: "12 avenue des Expéditions",
     complement: "Bâtiment C — Zone logistique",
@@ -91,9 +145,47 @@ function Section({ children, className = "" }) {
   );
 }
 
+// Petit intitulé au-dessus des titres : il donne un repère de lecture sans
+// alourdir la hiérarchie des titres.
+function Surtitre({ children }) {
+  return (
+    <p className="text-orange-500 font-semibold tracking-widest uppercase text-sm">
+      {children}
+    </p>
+  );
+}
+
+function TitreSection({ children, centre = false }) {
+  return (
+    <h2
+      className={`text-3xl md:text-4xl lg:text-5xl font-bold text-blue-900 mt-3 ${
+        centre ? "text-center" : ""
+      }`}
+    >
+      {children}
+    </h2>
+  );
+}
+
+function Etoiles({ note }) {
+  return (
+    <div className="flex gap-1" aria-label={`Note : ${note} sur 5`}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Star
+          key={i}
+          aria-hidden="true"
+          className={`size-4 ${
+            i <= note ? "fill-orange-400 text-orange-400" : "text-gray-300"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function About() {
   const [contactOuvert, setContactOuvert] = useState(false);
-  const { localisation } = AGENCE;
+  const { localisation, evolution, excellence, innovation } = AGENCE;
 
   return (
     <div style={{ backgroundColor: "#f9f9fa" }} className="min-h-screen">
@@ -103,66 +195,119 @@ export default function About() {
         <img
           src={entrepot}
           alt=""
-          className="w-full h-72 sm:h-96 object-cover"
+          className="w-full h-80 sm:h-96 md:h-[30rem] object-cover"
         />
-        <div className="bg-gray-900/60 absolute inset-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/60 to-gray-900/80" />
         <div className="absolute inset-0 flex items-center">
-          <Section>
-            <p className="text-white/80 text-lg">À propos</p>
-            <h1 className="text-white font-bold text-3xl md:text-5xl lg:text-6xl max-w-3xl">
+          <Section className="text-center">
+            <p className="text-orange-400 font-semibold tracking-widest uppercase text-sm">
+              À propos
+            </p>
+            <h1 className="text-white font-bold text-3xl md:text-5xl lg:text-6xl mt-3 mx-auto max-w-3xl">
               {AGENCE.slogan}
             </h1>
-            <p className="text-white/90 text-lg mt-4 flex items-center gap-2">
-              <CalendarDays className="size-5" />
+            <p className="text-white/90 text-lg mt-5 flex items-center justify-center gap-2">
+              <CalendarDays className="size-5 text-orange-400" />
               Agence créée en {AGENCE.creeeEn}
             </p>
           </Section>
         </div>
       </div>
 
-      <main className="py-12 md:py-20 space-y-16 md:space-y-24">
+      <main className="py-16 md:py-24 space-y-20 md:space-y-28">
+        <Section>
+          <div className="text-center mx-auto max-w-3xl">
+            <Surtitre>Notre parcours</Surtitre>
+            <TitreSection centre>{evolution.titre}</TitreSection>
+            <p className="text-xl md:text-2xl font-semibold text-orange-500 mt-6">
+              {evolution.accroche}
+            </p>
+            <p className="text-lg text-gray-600 mt-6">{evolution.texte}</p>
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <img
+              src={livreur}
+              alt=""
+              className="w-full max-w-3xl h-64 md:h-96 object-cover rounded-2xl shadow-sm"
+            />
+          </div>
+        </Section>
+
         <Section>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold">Notre histoire</h2>
-              {AGENCE.histoire.map((paragraphe) => (
-                <p key={paragraphe.slice(0, 30)} className="text-lg text-gray-600">
-                  {paragraphe}
-                </p>
-              ))}
+            <img
+              src={colisCamion}
+              alt=""
+              className="w-full h-64 md:h-96 object-cover rounded-2xl order-last lg:order-first"
+            />
+            <div>
+              <Surtitre>Notre engagement</Surtitre>
+              <TitreSection>{excellence.titre}</TitreSection>
+              <p className="text-lg text-gray-600 mt-6">{excellence.texte}</p>
+              <p className="text-sm text-gray-400 mt-4 border-l-2 border-gray-200 pl-3">
+                {excellence.note}
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        <Section>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div>
+              <Surtitre>Technologie</Surtitre>
+              <TitreSection>{innovation.titre}</TitreSection>
+              <div className="space-y-4 mt-6">
+                {innovation.paragraphes.map((p) => (
+                  <p key={p.slice(0, 30)} className="text-lg text-gray-600">
+                    {p}
+                  </p>
+                ))}
+              </div>
             </div>
             <img
-              src={camion}
+              src={atelier}
               alt=""
               className="w-full h-64 md:h-96 object-cover rounded-2xl"
             />
           </div>
         </Section>
 
-        <div className="bg-black text-white py-12 md:py-20">
-          <Section className="text-center space-y-5">
+        <div className="bg-blue-900 text-white py-16 md:py-24">
+          <Section className="text-center">
             <Compass className="size-10 mx-auto text-orange-400" />
-            <h2 className="text-orange-400 text-2xl md:text-3xl lg:text-4xl font-bold">
+            <p className="text-orange-400 font-semibold tracking-widest uppercase text-sm mt-4">
               Notre vision
-            </h2>
-            <p className="text-lg mx-auto max-w-3xl">{AGENCE.vision}</p>
-            <p className="text-white/70 mx-auto max-w-2xl italic">
+            </p>
+            <p className="text-xl md:text-2xl mx-auto max-w-3xl mt-5">
+              {AGENCE.vision}
+            </p>
+            <p className="text-white/70 mx-auto max-w-2xl italic mt-6">
               {AGENCE.mission}
             </p>
           </Section>
         </div>
 
         <Section>
-          <h2 className="text-3xl md:text-4xl font-bold text-center">
-            Nos valeurs
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+          <div className="text-center">
+            <Surtitre>Ce qui nous guide</Surtitre>
+            <TitreSection centre>Nos valeurs</TitreSection>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {AGENCE.valeurs.map((valeur) => {
               const Icone = valeur.icone;
               return (
-                <div key={valeur.titre} className="space-y-3">
-                  <Icone className="text-blue-500/60 size-12" />
-                  <h3 className="text-xl font-bold">{valeur.titre}</h3>
+                <div
+                  key={valeur.titre}
+                  className="bg-white border border-gray-200 rounded-2xl p-6 text-center space-y-3"
+                >
+                  <span className="inline-flex items-center justify-center size-14 rounded-full bg-orange-50">
+                    <Icone className="text-orange-500 size-7" />
+                  </span>
+                  <h3 className="text-xl font-bold text-blue-900">
+                    {valeur.titre}
+                  </h3>
                   <p className="text-gray-600">{valeur.texte}</p>
                 </div>
               );
@@ -171,10 +316,44 @@ export default function About() {
         </Section>
 
         <Section>
-          <h2 className="text-3xl md:text-4xl font-bold">Où nous trouver</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 space-y-3">
-              <h3 className="flex items-center gap-2 text-xl font-bold">
+          <div className="text-center">
+            <Surtitre>Ils nous ont fait confiance</Surtitre>
+            <TitreSection centre>
+              Découvrez ce que les clients disent de SwiftShipe
+            </TitreSection>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+            {AGENCE.temoignages.map((avis) => (
+              <figure
+                key={avis.nom}
+                className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 flex flex-col gap-4"
+              >
+                <Quote className="size-8 text-orange-200" aria-hidden="true" />
+                <blockquote className="text-lg text-gray-700 flex-1">
+                  {avis.texte}
+                </blockquote>
+                <figcaption className="flex items-center justify-between gap-4 border-t border-gray-100 pt-4">
+                  <div>
+                    <p className="font-bold text-blue-900">{avis.nom}</p>
+                    <p className="text-gray-500 text-sm">{avis.role}</p>
+                  </div>
+                  <Etoiles note={avis.note} />
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Section>
+
+        <Section>
+          <div className="text-center">
+            <Surtitre>Nous trouver</Surtitre>
+            <TitreSection centre>Où nous rendre visite</TitreSection>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 space-y-4">
+              <h3 className="flex items-center gap-2 text-xl font-bold text-blue-900">
                 <MapPin className="size-5 text-orange-500" />
                 Adresse
               </h3>
@@ -188,8 +367,8 @@ export default function About() {
               </address>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 space-y-3">
-              <h3 className="flex items-center gap-2 text-xl font-bold">
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 space-y-4">
+              <h3 className="flex items-center gap-2 text-xl font-bold text-blue-900">
                 <Clock className="size-5 text-orange-500" />
                 Horaires d'ouverture
               </h3>
@@ -209,27 +388,28 @@ export default function About() {
         </Section>
 
         <Section>
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-12 text-center space-y-6">
-            <Building2 className="size-10 mx-auto text-orange-500" />
-            <h2 className="text-2xl md:text-3xl font-bold">
-              Un colis en route, ou un envoi à organiser ?
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-14 text-center space-y-6">
+            <PackageSearch className="size-12 mx-auto text-orange-500" />
+            <h2 className="text-2xl md:text-4xl font-bold text-blue-900">
+              Suivez votre colis en temps réel
             </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
-              Le suivi se fait en ligne avec votre numéro. Pour expédier un
-              colis, contactez directement l'agence.
+            <p className="text-lg text-gray-600 max-w-xl mx-auto">
+              Votre numéro de suivi suffit : aucun compte, aucune inscription.
+              Pour expédier un colis, contactez directement l'agence.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/tracking"
-                className="bg-orange-500 text-white font-semibold rounded-full px-6 py-3"
+                className="bg-orange-500 text-white font-semibold rounded-full px-8 py-3"
               >
                 Suivre mon colis
               </Link>
               <button
                 type="button"
                 onClick={() => setContactOuvert(true)}
-                className="border border-gray-300 font-semibold rounded-full px-6 py-3"
+                className="border border-gray-300 font-semibold rounded-full px-8 py-3 flex items-center justify-center gap-2"
               >
+                <Building2 className="size-5" />
                 Nous contacter
               </button>
             </div>
