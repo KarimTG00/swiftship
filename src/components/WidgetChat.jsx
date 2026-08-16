@@ -9,6 +9,28 @@ import {
 const ACCUEIL =
   "Bonjour. Une question sur votre colis ? Écrivez-nous, nous vous répondrons par email.";
 
+// Mémorise que le visiteur a déjà ouvert la discussion, pour ne pas lui
+// remettre la pastille « 1 message non lu » à chaque page.
+// localStorage et non cookie : c'est une préférence d'affichage, pas une
+// identité — l'identité reste le cookie httpOnly posé par le serveur.
+const CLE_DEJA_OUVERT = "swiftshipe.chat-ouvert";
+
+function dejaOuvertUneFois() {
+  try {
+    return localStorage.getItem(CLE_DEJA_OUVERT) === "1";
+  } catch {
+    return false; // navigation privée ou stockage refusé
+  }
+}
+
+function memoriserOuverture() {
+  try {
+    localStorage.setItem(CLE_DEJA_OUVERT, "1");
+  } catch {
+    // Sans stockage, la pastille réapparaîtra : sans conséquence.
+  }
+}
+
 function heure(valeur) {
   if (!valeur) return "";
   return new Date(valeur).toLocaleTimeString("fr-FR", {
@@ -56,6 +78,7 @@ function Bulle({ message }) {
 
 export default function WidgetChat() {
   const [ouvert, setOuvert] = useState(false);
+  const [dejaVu, setDejaVu] = useState(dejaOuvertUneFois);
   const [messages, setMessages] = useState([]);
   const [emailRenseigne, setEmailRenseigne] = useState(true);
   const [chargement, setChargement] = useState(false);
@@ -144,16 +167,33 @@ export default function WidgetChat() {
     }
   }
 
+  function auClicOuverture() {
+    setOuvert(true);
+    setDejaVu(true);
+    memoriserOuverture();
+  }
+
   if (!ouvert) {
     return (
       <button
         type="button"
-        onClick={() => setOuvert(true)}
-        aria-label="Ouvrir la discussion"
-        className="fixed bottom-5 left-5 z-40 flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg px-5 py-4 transition-colors"
+        onClick={auClicOuverture}
+        aria-label={
+          dejaVu ? "Ouvrir la discussion" : "Ouvrir la discussion, 1 message non lu"
+        }
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg px-5 py-4 transition-colors"
       >
         <MessageCircle className="size-6" />
         <span className="hidden sm:inline font-semibold">Nous écrire</span>
+
+        {!dejaVu && (
+          <span
+            aria-hidden="true"
+            className="absolute -top-1 -right-1 flex items-center justify-center size-6 rounded-full bg-red-600 text-white text-sm font-bold border-2 border-white"
+          >
+            1
+          </span>
+        )}
       </button>
     );
   }
@@ -163,7 +203,7 @@ export default function WidgetChat() {
       role="dialog"
       aria-modal="false"
       aria-label="Discussion avec l'agence"
-      className="fixed bottom-5 left-5 right-5 sm:right-auto z-40 sm:w-96 max-h-[80vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-rise-in"
+      className="fixed bottom-5 right-5 left-5 sm:left-auto z-40 sm:w-96 max-h-[80vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-rise-in"
     >
       <div className="bg-blue-950 text-white px-4 py-3 flex items-center justify-between gap-3">
         <div>
