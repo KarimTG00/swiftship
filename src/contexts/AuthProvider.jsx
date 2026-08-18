@@ -4,7 +4,7 @@ import { ContexteAuth } from "./contexteAuth";
 
 export default function FournisseurAuth({ children }) {
   const [utilisateur, setUtilisateur] = useState(null);
-  // "chargement" évite de rediriger vers /login pendant qu'on vérifie encore
+  // "chargement" évite de rediriger vers login pendant qu'on vérifie encore
   // la session : sans lui, un admin déjà connecté serait éjecté à chaque
   // rechargement de page.
   const [chargement, setChargement] = useState(true);
