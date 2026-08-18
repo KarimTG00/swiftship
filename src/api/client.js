@@ -2,6 +2,7 @@
 // vide et les appels sont en same-origin. En production, VITE_API_URL pointe
 // vers le sous-domaine de l'API.
 const BASE = import.meta.env.VITE_API_URL ?? "";
+console.log(BASE);
 
 export class ErreurApi extends Error {
   constructor(message, statut, champs) {
