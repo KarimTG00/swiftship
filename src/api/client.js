@@ -2,7 +2,6 @@
 // vide et les appels sont en same-origin. En production, VITE_API_URL pointe
 // vers le sous-domaine de l'API.
 const BASE = import.meta.env.VITE_API_URL ?? "";
-console.log(BASE);
 
 export class ErreurApi extends Error {
   constructor(message, statut, champs) {
@@ -18,6 +17,7 @@ export class ErreurApi extends Error {
 export async function appelApi(chemin, { methode = "GET", corps } = {}) {
   let reponse;
   try {
+    console.log(`${BASE}/api${chemin}`);
     reponse = await fetch(`${BASE}/api${chemin}`, {
       method: methode,
       // Indispensable : sans credentials, le cookie de session n'est ni
