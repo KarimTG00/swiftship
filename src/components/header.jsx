@@ -83,7 +83,9 @@ export default function Header() {
         </Link>
       </div>
 
-      {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
+      {contactOuvert && (
+        <ContactModal onClose={() => setContactOuvert(false)} />
+      )}
     </header>
   );
 }

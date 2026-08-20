@@ -48,6 +48,6 @@ export async function appelApi(chemin, { methode = "GET", corps } = {}) {
       donnees?.champs,
     );
   }
-
+  console.log(donnees);
   return donnees;
 }

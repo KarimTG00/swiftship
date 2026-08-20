@@ -26,6 +26,15 @@ import entreposage from "../assets/entreposage.jpg";
 import distribution from "../assets/distribution.jpg";
 import competences from "../assets/colis.jpg";
 
+// import logo
+
+import dhl from "../assets/partnerLogo/dhlLogo.png";
+import fedex from "../assets/partnerLogo/fedexLogo.png";
+import maersk from "../assets/partnerLogo/maerskLogo.png";
+import msc from "../assets/partnerLogo/mscLogo.jpg";
+import robinson from "../assets/partnerLogo/robinsonLogo.png";
+import ups from "../assets/partnerLogo/upsLogo.png";
+
 // ---------------------------------------------------------------------------
 // DONNÉES D'EXEMPLE — tout le contenu de la page vient de cet objet.
 //
@@ -38,7 +47,8 @@ const SERVICES = [
     icone: Plane,
     image: aerien,
     titre: "Fret aérien",
-    texte: "Services de fret aérien rapides et sécurisés pour les envois urgents.",
+    texte:
+      "Services de fret aérien rapides et sécurisés pour les envois urgents.",
   },
   {
     icone: Ship,
@@ -65,7 +75,8 @@ const SERVICES = [
     icone: Warehouse,
     image: entreposage,
     titre: "Entreposage",
-    texte: "Entrepôts modernes et sécurisés avec gestion des stocks et stockage.",
+    texte:
+      "Entrepôts modernes et sécurisés avec gestion des stocks et stockage.",
   },
   {
     icone: Boxes,
@@ -108,16 +119,6 @@ const COMPETENCES = [
   { libelle: "Fret aérien", pourcentage: 98 },
   { libelle: "Fret maritime et océanique", pourcentage: 95 },
   { libelle: "Livraison routière et terrestre", pourcentage: 99 },
-];
-
-// TODO: remplacer par les vrais partenaires de l'agence.
-const PARTENAIRES = [
-  "Partenaire 1",
-  "Partenaire 2",
-  "Partenaire 3",
-  "Partenaire 4",
-  "Partenaire 5",
-  "Partenaire 6",
 ];
 
 function Section({ children, className = "" }) {
@@ -222,8 +223,8 @@ export function Service() {
               <Surtitre>Pourquoi nous choisir</Surtitre>
               <TitreSection>Livraisons ponctuelles et fiables</TitreSection>
               <p className="text-lg text-gray-600 mt-6">
-                Nous mettons un point d'honneur à ce que chaque colis parvienne à
-                destination rapidement et en toute sécurité. Notre engagement
+                Nous mettons un point d'honneur à ce que chaque colis parvienne
+                à destination rapidement et en toute sécurité. Notre engagement
                 envers l'efficacité vous garantit des livraisons ponctuelles,
                 qu'il s'agisse d'un envoi local ou d'une commande longue
                 distance. Grâce à des systèmes de suivi performants et à une
@@ -321,15 +322,54 @@ export function Service() {
             logistiques qui partagent notre vision d'excellence et de fiabilité.
           </p>
 
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-12">
-            {PARTENAIRES.map((partenaire) => (
-              <li
-                key={partenaire}
-                className="bg-white border border-gray-200 rounded-xl h-24 flex items-center justify-center text-gray-400 text-sm px-2 text-center"
-              >
-                {partenaire}
-              </li>
-            ))}
+          <ul className="flex gap-4 mt-12 w-full overflow-x-auto pb-2">
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center ">
+              <img
+                src={dhl}
+                alt="DHL"
+                className="w-full h-full object-cover rounded-xl"
+              />
+            </li>
+
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center px-4">
+              <img
+                src={fedex}
+                alt="FedEx"
+                className="w-full h-full object-contain"
+              />
+            </li>
+
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center px-4">
+              <img
+                src={maersk}
+                alt="Maersk"
+                className="w-full h-full object-contain"
+              />
+            </li>
+
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center px-4">
+              <img
+                src={msc}
+                alt="MSC"
+                className="w-full h-full object-contain"
+              />
+            </li>
+
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center px-4">
+              <img
+                src={robinson}
+                alt="Robinson"
+                className="w-full h-full object-contain"
+              />
+            </li>
+
+            <li className="shrink-0 w-36 sm:w-40 md:w-44 h-24 bg-white border border-gray-200 rounded-xl flex items-center justify-center px-4">
+              <img
+                src={ups}
+                alt="UPS"
+                className="w-full h-full object-contain"
+              />
+            </li>
           </ul>
         </Section>
 
@@ -367,7 +407,9 @@ export function Service() {
 
       <WidgetChat />
 
-      {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
+      {contactOuvert && (
+        <ContactModal onClose={() => setContactOuvert(false)} />
+      )}
     </div>
   );
 }

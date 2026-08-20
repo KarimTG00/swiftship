@@ -16,7 +16,7 @@ const VIDE = {
   adresse: "",
   ville: "",
   destination: "",
-  distanceKm: "",
+  depart: "",
   description: "",
   taille: "",
   poids: "",
@@ -94,7 +94,7 @@ export default function ModaleExpedition({ onClose, onCreee }) {
           ville: valeurs.ville,
         },
         destination: valeurs.destination,
-        distanceKm: valeurs.distanceKm,
+        depart: valeurs.depart,
         colis: {
           description: valeurs.description,
           taille: valeurs.taille,
@@ -165,7 +165,11 @@ export default function ModaleExpedition({ onClose, onCreee }) {
                 onClick={copierTracking}
                 className="flex items-center gap-2 border border-gray-300 rounded-full px-4 py-2 shrink-0"
               >
-                {copie ? <Check className="size-4" /> : <Copy className="size-4" />}
+                {copie ? (
+                  <Check className="size-4" />
+                ) : (
+                  <Copy className="size-4" />
+                )}
                 {copie ? "Copié" : "Copier"}
               </button>
             </div>
@@ -195,7 +199,12 @@ export default function ModaleExpedition({ onClose, onCreee }) {
             <fieldset className="space-y-4">
               <legend className="font-bold text-gray-800">Destinataire</legend>
 
-              <Champ id="nom" label="Nom" obligatoire erreur={erreurs["destinataire.nom"]}>
+              <Champ
+                id="nom"
+                label="Nom"
+                obligatoire
+                erreur={erreurs["destinataire.nom"]}
+              >
                 <input
                   ref={premierChamp}
                   id="nom"
@@ -269,14 +278,14 @@ export default function ModaleExpedition({ onClose, onCreee }) {
                   />
                 </Champ>
 
-                <Champ id="distanceKm" label="Kilométrage (facultatif)">
+                <Champ id="depart" label="Départ">
                   <input
-                    id="distanceKm"
-                    type="number"
+                    id="depart"
+                    type="text"
                     min="0"
                     step="any"
-                    value={valeurs.distanceKm}
-                    onChange={(e) => maj("distanceKm", e.target.value)}
+                    value={valeurs.depart}
+                    onChange={(e) => maj("depart", e.target.value)}
                     className={classeChamp}
                   />
                 </Champ>

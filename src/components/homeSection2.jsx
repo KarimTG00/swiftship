@@ -1,6 +1,6 @@
 import { Box, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-import camion from "../assets/camion.jpg";
+import camion from "../assets/image1.jpg";
 
 export default function Section2() {
   return (
@@ -15,7 +15,7 @@ export default function Section2() {
           <img
             src={camion}
             alt=""
-            className="w-full h-56 md:h-80 lg:h-96 object-cover rounded-lg"
+            className="w-full h-56 md:h-80 lg:h-100 object-cover rounded-lg"
           />
         </div>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold">

@@ -8,6 +8,7 @@ import CarteItineraire from "../components/CarteItineraire";
 import { arriveeAjustee } from "../domaine/progression";
 import Footer from "../components/footer";
 import WidgetChat from "../components/WidgetChat";
+import Itineraire from "../components/itineraire";
 
 const LIBELLES_TYPE = {
   STANDARD: "Livraison standard",
@@ -82,6 +83,7 @@ function Recherche({ valeurInitiale = "" }) {
 export default function Tracking() {
   const { trackingNumber } = useParams();
   const [colis, setColis] = useState(null);
+  const [itineraire, setItineraire] = useState(null);
   const [erreur, setErreur] = useState(null);
   const [chargement, setChargement] = useState(false);
 
@@ -92,6 +94,7 @@ export default function Tracking() {
     try {
       const donnees = await suivreColis(numero);
       setColis(donnees.colis);
+      setItineraire(donnees.itineraire);
     } catch (e) {
       setErreur(e.message);
     } finally {
@@ -106,7 +109,10 @@ export default function Tracking() {
   const arrivee = colis ? arriveeAjustee(colis) : null;
 
   return (
-    <div style={{ backgroundColor: "#f9f9fa" }} className="min-h-screen flex flex-col">
+    <div
+      style={{ backgroundColor: "#f9f9fa" }}
+      className="min-h-screen flex flex-col"
+    >
       <header className="bg-white border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4 md:px-8 py-4">
           <Link to="/" className="flex gap-2 items-center w-fit">
@@ -136,7 +142,8 @@ export default function Tracking() {
             <p className="font-semibold text-lg">{erreur}</p>
             <p className="text-gray-600">
               Vérifiez le numéro communiqué par l'agence. Il se présente sous la
-              forme <code className="font-semibold">SHT-000000000000-CARGO</code>.
+              forme{" "}
+              <code className="font-semibold">SHT-000000000000-CARGO</code>.
             </p>
           </div>
         )}
@@ -157,7 +164,7 @@ export default function Tracking() {
               </div>
 
               <BarreProgression expedition={colis} />
-
+              <Itineraire itineraire={itineraire} />
               {arrivee && (
                 <p className="text-gray-600">
                   Arrivée estimée :{" "}
@@ -191,7 +198,10 @@ export default function Tracking() {
                       "Poids",
                       colis.colis?.poids ? `${colis.colis.poids} kg` : null,
                     ],
-                    ["Distance", colis.distanceKm ? `${colis.distanceKm} km` : null],
+                    [
+                      "Distance",
+                      colis.distanceKm ? `${colis.distanceKm} km` : null,
+                    ],
                     ["Enregistré le", dateLongue(colis.creeLe)],
                   ]}
                 />

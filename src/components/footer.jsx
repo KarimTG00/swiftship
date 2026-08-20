@@ -171,7 +171,7 @@ export default function Footer() {
 
       <div className="border-t border-gray-800 px-6 md:px-8 py-6">
         <div className="mx-auto max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-4 text-gray-500">
-          <span>© {new Date().getFullYear()} SwiftShipe. Tous droits réservés.</span>
+          <span>© 2021 SwiftShipe. Tous droits réservés.</span>
 
           {/* Accès réservé aux membres de l'agence : discret, en pied de page,
               jamais mis en avant sur la partie vitrine (§13). */}
@@ -195,7 +195,9 @@ export default function Footer() {
         </div>
       </div>
 
-      {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
+      {contactOuvert && (
+        <ContactModal onClose={() => setContactOuvert(false)} />
+      )}
     </footer>
   );
 }
