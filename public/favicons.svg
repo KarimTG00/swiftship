@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Face avant -->
+  <polygon points="100,182 8,140 8,40 100,82" fill="#FF6600" stroke="white" stroke-width="7" stroke-linejoin="round"/>
+  <!-- Face droite -->
+  <polygon points="100,182 192,140 192,40 100,82" fill="#FF6600" stroke="white" stroke-width="7" stroke-linejoin="round"/>
+  <!-- Face supérieure -->
+  <polygon points="100,82 8,40 100,0 192,40" fill="#FF6600" stroke="white" stroke-width="7" stroke-linejoin="round"/>
+</svg>
