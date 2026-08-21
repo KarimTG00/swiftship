@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Box, LoaderCircle } from "lucide-react";
 import { useAuth } from "../contexts/contexteAuth";
+import reset from "../api/resetPassword";
 
 export default function Login() {
   const { utilisateur, chargement, connexion } = useAuth();
@@ -12,6 +13,10 @@ export default function Login() {
   const [motDePasse, setMotDePasse] = useState("");
   const [erreur, setErreur] = useState(null);
   const [envoi, setEnvoi] = useState(false);
+  const [resetPassword, setResetPassword] = useState({
+    status: false,
+    email: {},
+  });
 
   const destination = emplacement.state?.depuis?.pathname ?? "/dashboard";
 
@@ -115,6 +120,58 @@ export default function Login() {
           >
             Retour au site
           </Link>
+          <div className="pt-4 space-y-3">
+            <span
+              className="text-red-500 cursor-pointer"
+              onClick={() => {
+                setResetPassword({ ...resetPassword, status: true });
+              }}
+            >
+              Mot de passe oublier ?{" "}
+            </span>
+
+            {resetPassword.status && (
+              <div className="space-y-3">
+                <p className="block font-semibold text-gray-500">
+                  Entrer l'email correspondant a se compte
+                </p>
+                <form
+                  action=""
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    reset(resetPassword.email);
+                  }}
+                >
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="reset" className="font-semibold block">
+                      Email :{" "}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      name="email_reset"
+                      id="reset"
+                      onChange={(e) => {
+                        setResetPassword({
+                          ...resetPassword,
+                          email: { email: e.target.value },
+                        });
+                      }}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 "
+                    />
+
+                    <button
+                      type="submit"
+                      className="w-full border-2 border-gray-200 bg-blue-400 text-white font-semibold rounded-full px-6 py-3 disabled:opacity-60 flex items-center justify-center gap-2"
+                    >
+                      {" "}
+                      reset
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

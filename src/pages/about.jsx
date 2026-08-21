@@ -346,7 +346,7 @@ export default function About() {
           </div>
         </Section>
 
-        <Section>
+        {/* <Section>
           <div className="text-center">
             <Surtitre>Nous trouver</Surtitre>
             <TitreSection centre>Où nous rendre visite</TitreSection>
@@ -386,7 +386,7 @@ export default function About() {
               </dl>
             </div>
           </div>
-        </Section>
+        </Section> */}
 
         <Section>
           <div className="bg-white border border-gray-200 rounded-2xl p-8 md:p-14 text-center space-y-6">
@@ -422,7 +422,9 @@ export default function About() {
 
       <WidgetChat />
 
-      {contactOuvert && <ContactModal onClose={() => setContactOuvert(false)} />}
+      {contactOuvert && (
+        <ContactModal onClose={() => setContactOuvert(false)} />
+      )}
     </div>
   );
 }

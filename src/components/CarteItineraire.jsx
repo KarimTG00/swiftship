@@ -8,14 +8,14 @@ import { MapPin, Truck } from "lucide-react";
 // La destination affichée est volontairement la ville ou la zone, jamais
 // l'adresse exacte du destinataire : cette page est publique et le numéro de
 // suivi n'authentifie personne (§37).
-export default function CarteItineraire({ origine, destination }) {
+export default function CarteItineraire({ depart, destination }) {
   const cle = import.meta.env.VITE_GOOGLE_MAPS_KEY;
 
   const trajet = (
     <div className="flex items-center gap-3 flex-wrap">
       <span className="flex items-center gap-2 font-semibold">
         <Truck className="size-5 text-orange-500" />
-        {origine || "Point de départ"}
+        {depart || "Point de départ"}
       </span>
       <span className="text-gray-400">→</span>
       <span className="flex items-center gap-2 font-semibold">
@@ -25,7 +25,7 @@ export default function CarteItineraire({ origine, destination }) {
     </div>
   );
 
-  if (!cle || !origine || !destination) {
+  if (!cle || !depart || !destination) {
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-2">
         <h3 className="font-bold">Itinéraire</h3>
@@ -37,7 +37,7 @@ export default function CarteItineraire({ origine, destination }) {
   const src =
     "https://www.google.com/maps/embed/v1/directions" +
     `?key=${encodeURIComponent(cle)}` +
-    `&origin=${encodeURIComponent(origine)}` +
+    `&origin=${encodeURIComponent(depart)}` +
     `&destination=${encodeURIComponent(destination)}` +
     "&mode=driving";
 

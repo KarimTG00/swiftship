@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowUpRight, Box, PackageSearch } from "lucide-react";
+import { ArrowUpRight, Box, MapPin, PackageSearch, Truck } from "lucide-react";
 import { suivreColis } from "../api/tracking";
 import BarreProgression from "../components/BarreProgression";
 import Timeline from "../components/Timeline";
@@ -8,7 +8,7 @@ import CarteItineraire from "../components/CarteItineraire";
 import { arriveeAjustee } from "../domaine/progression";
 import Footer from "../components/footer";
 import WidgetChat from "../components/WidgetChat";
-import Itineraire from "../components/itineraire";
+import MapItineraire from "../components/itineraire";
 
 const LIBELLES_TYPE = {
   STANDARD: "Livraison standard",
@@ -83,18 +83,27 @@ function Recherche({ valeurInitiale = "" }) {
 export default function Tracking() {
   const { trackingNumber } = useParams();
   const [colis, setColis] = useState(null);
-  const [itineraire, setItineraire] = useState(null);
+  // const [itineraire, setItineraire] = useState(null);
   const [erreur, setErreur] = useState(null);
   const [chargement, setChargement] = useState(false);
+  const [itineraire, setItineraire] = useState({
+    depart: "",
+    destination: "",
+  });
 
   const charger = useCallback(async (numero) => {
     setChargement(true);
     setErreur(null);
     setColis(null);
+
     try {
       const donnees = await suivreColis(numero);
       setColis(donnees.colis);
-      setItineraire(donnees.itineraire);
+
+      setItineraire({
+        depart: donnees.colis.depart,
+        destination: donnees.colis.destination,
+      });
     } catch (e) {
       setErreur(e.message);
     } finally {
@@ -164,7 +173,22 @@ export default function Tracking() {
               </div>
 
               <BarreProgression expedition={colis} />
-              <Itineraire itineraire={itineraire} />
+              <MapItineraire
+                depart={itineraire.depart}
+                destination={itineraire.destination}
+              />
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="flex items-center gap-2 font-semibold">
+                  <Truck className="size-5 text-orange-500" />
+                  {itineraire.depart || "Point de départ"}
+                </span>
+                <span className="text-gray-400">→</span>
+                <span className="flex items-center gap-2 font-semibold">
+                  <MapPin className="size-5 text-orange-500" />
+                  {itineraire.destination || "Destination"}
+                </span>
+              </div>
+
               {arrivee && (
                 <p className="text-gray-600">
                   Arrivée estimée :{" "}
@@ -172,13 +196,6 @@ export default function Tracking() {
                   {colis.progression?.enPause && " (suspendue)"}
                 </p>
               )}
-            </section>
-
-            <section className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8">
-              <CarteItineraire
-                origine={colis.origine}
-                destination={colis.destination}
-              />
             </section>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -218,12 +235,12 @@ export default function Tracking() {
                 />
 
                 <Fiche
-                  titre="Votre interlocuteur"
+                  titre="Expediteur"
                   lignes={[
-                    ["Nom", colis.agence?.nom],
-                    ["Téléphone", colis.agence?.telephone],
-                    ["Email", colis.agence?.email],
-                    ["Agence", colis.agence?.adresse],
+                    ["Nom", colis.expediteur?.nom],
+                    ["Téléphone", colis.expediteur?.numero],
+                    ["Email", colis.expediteur?.email],
+                    ["adresse", colis.expediteur?.adresse],
                   ]}
                 />
               </div>

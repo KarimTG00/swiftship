@@ -16,6 +16,7 @@ export class ErreurApi extends Error {
 
 export async function appelApi(chemin, { methode = "GET", corps } = {}) {
   let reponse;
+  console.log("voici le corps : ", corps);
   try {
     console.log(`${BASE}/api${chemin}`);
     reponse = await fetch(`${BASE}/api${chemin}`, {
@@ -48,6 +49,6 @@ export async function appelApi(chemin, { methode = "GET", corps } = {}) {
       donnees?.champs,
     );
   }
-  console.log(donnees);
+
   return donnees;
 }

@@ -20,6 +20,12 @@ const VIDE = {
   description: "",
   taille: "",
   poids: "",
+
+  nomExpediteur: "",
+  emailExpediteur: "",
+  adresseExpediteur: "",
+  numeroExpediteur: "",
+
   valeur: "",
   typeLivraison: "STANDARD",
   arriveePrevueLe: "",
@@ -100,6 +106,12 @@ export default function ModaleExpedition({ onClose, onCreee }) {
           taille: valeurs.taille,
           poids: valeurs.poids,
           valeur: valeurs.valeur,
+        },
+        expediteur: {
+          nom: valeurs.nomExpediteur,
+          email: valeurs.emailExpediteur,
+          adresse: valeurs.adresseExpediteur,
+          numero: valeurs.numeroExpediteur,
         },
         typeLivraison: valeurs.typeLivraison,
         arriveePrevueLe: valeurs.arriveePrevueLe
@@ -258,7 +270,56 @@ export default function ModaleExpedition({ onClose, onCreee }) {
                 publique : toute personne disposant du numéro de suivi les voit.
               </p>
             </fieldset>
+            <fieldset className="space-y-4">
+              <legend className="font-bold text-gray-800">Expediteur</legend>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Champ
+                  id="Nom"
+                  label="Nom de l'expediteur"
+                  obligatoire
+                  erreur={erreurs.expediteur}
+                >
+                  <input
+                    id="expediteur"
+                    required
+                    value={valeurs.nomExpediteur}
+                    onChange={(e) => maj("nomExpediteur", e.target.value)}
+                    className={classeChamp}
+                  />
+                </Champ>
+
+                <Champ id="emailExpediteur" label="email">
+                  <input
+                    id="emailExpediteur"
+                    type="email"
+                    required
+                    value={valeurs.emailExpediteur}
+                    onChange={(e) => maj("emailExpediteur", e.target.value)}
+                    className={classeChamp}
+                  />
+                </Champ>
+                <Champ id="adresseExpediteur" label="adresse">
+                  <input
+                    id="adresseExpediteur"
+                    type="text"
+                    required
+                    value={valeurs.adresseExpediteur}
+                    onChange={(e) => maj("adresseExpediteur", e.target.value)}
+                    className={classeChamp}
+                  />
+                </Champ>
+                <Champ id="numeroExpediteur" label="numéro">
+                  <input
+                    id="numeroExpediteur"
+                    type="number"
+                    value={valeurs.numeroExpediteur}
+                    onChange={(e) => maj("numeroExpediteur", e.target.value)}
+                    className={classeChamp}
+                  />
+                </Champ>
+              </div>
+            </fieldset>
             <fieldset className="space-y-4">
               <legend className="font-bold text-gray-800">Livraison</legend>
 
